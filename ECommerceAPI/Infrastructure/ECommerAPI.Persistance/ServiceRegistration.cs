@@ -1,7 +1,8 @@
 ﻿using ECommerAPI.Persistance.Contexts;
+using ECommerAPI.Persistance.Repositories;
+using ECommerceAPI.Application.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection.Metadata;
 
 namespace ECommerAPI.Persistance
 {
@@ -11,6 +12,16 @@ namespace ECommerAPI.Persistance
         {
             //adding  DbContext in Built-in IoC Container and using PostgreSQL
             services.AddDbContext<ECommerceAPIDbContext>(options => options.UseNpgsql(Configuration.ConnectionString));
+
+            //DbContext nesnesi  hangi lifetime'a sahipse Repository Servislerimizide o lifetimeda yapmak daha sağlıklı olacaktır. DbContext lifetiem default olarak Scoped
+            //adding Repository Services
+            services.AddScoped<ICustomerReadRepository, CustomerReadRepository>();
+            services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
+            services.AddScoped<IOrderReadRepository, OrderReadRepository>();
+            services.AddScoped<IOrderWriteRepository, OrderWriteRepository>();
+            services.AddScoped<IProductReadRepository, ProductReadRepository>();
+            services.AddScoped<IProductWriteRepository, ProductWriteRepository>();
         }
     }
 }
+ 

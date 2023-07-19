@@ -20,7 +20,7 @@ namespace ECommerAPI.Persistance.Repositories
             var query = Table.AsQueryable();
             if (!tracking)
             {
-                query = query.AsNoTracking(); //Eğerki verilerin izlenmesini istemiyorsam Trackingi kesiyorum.Trackinge gerek yoksa kesiyorum ve maliyeti düşürüyorum
+                query = query.AsNoTracking(); //if tracking false, cut tracking
             }
             return query;
         }
@@ -52,7 +52,6 @@ namespace ECommerAPI.Persistance.Repositories
             {
                 query = Table.AsNoTracking();
             }
-            //IQuaeryable'da çalışıyorsan FindAsync fonksiyonu yoktur. Böyle bir durumda marker interface'ini kullanmak zorunda kalacaksın. FirstOrDefaultu kullanacaksın.Yİne başa döndük yani :D
             return await query.FirstOrDefaultAsync(data => data.Id == Guid.Parse(id));
         }
     }

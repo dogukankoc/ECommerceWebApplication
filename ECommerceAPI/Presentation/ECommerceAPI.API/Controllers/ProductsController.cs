@@ -6,39 +6,32 @@ namespace ECommerceAPI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class ProductsController : ControllerBase //TestController
     {
         private readonly IProductWriteRepository _productWriteRepository;
         private readonly IProductReadRepository _productReadRepository;
-        public ProductsController(IProductWriteRepository productWriteRepository, IProductReadRepository productReadRepository)
+
+        private readonly IOrderWriteRepository _orderWriteRepository;
+        private readonly IOrderReadRepository _orderReadRepository;
+
+
+        private readonly ICustomerWriteRepository _customerWriteRepository;
+
+        public ProductsController(IProductWriteRepository productWriteRepository, IProductReadRepository productReadRepository, IOrderWriteRepository orderWriteRepository, ICustomerWriteRepository customerWriteRepository, IOrderReadRepository orderReadRepository)
         {
             _productWriteRepository = productWriteRepository;
             _productReadRepository = productReadRepository;
+            _orderWriteRepository = orderWriteRepository;
+            _customerWriteRepository = customerWriteRepository;
+            _orderReadRepository = orderReadRepository;
         }
 
-        [HttpGet]
+        [HttpGet]  
         public async Task Get()
         {
-            //await _productWriteRepository.AddRangeAsync(new()
-            //{
-            //    new() {Id=Guid.NewGuid(), Name="Product1", Stock=100, Price=10, CreatedDate=DateTime.UtcNow},
-            //    new() {Id=Guid.NewGuid(), Name="Product4", Stock=100, Price=10, CreatedDate=DateTime.UtcNow},
-            //    new() {Id=Guid.NewGuid(), Name="Product5", Stock=100, Price=10, CreatedDate=DateTime.UtcNow},
-            //});
-
-            //await _productWriteRepository.SaveAsync();
-
-            Product p = await _productReadRepository.GetByIdAsync("cdc470a1-e375-4555-ba77-41bd020a18dd", false); //Tracking is false
-            p.Name = "Apple";
-            await _productWriteRepository.SaveAsync(); 
-
-
+            Order order = await _orderReadRepository.GetByIdAsync("5433d6be-a28f-4d78-b3bb-1d3b4a01c6f3");
+            order.Address = "Istanbul";
+            await _orderWriteRepository.SaveAsync();
         }
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(string id)
-        {
-            Product product = await _productReadRepository.GetByIdAsync(id);
-            return Ok(product);
-            }
-        }
+    }
 }

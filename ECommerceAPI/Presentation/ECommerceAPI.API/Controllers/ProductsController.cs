@@ -14,7 +14,6 @@ namespace ECommerceAPI.API.Controllers
         private readonly IOrderWriteRepository _orderWriteRepository;
         private readonly IOrderReadRepository _orderReadRepository;
 
-
         private readonly ICustomerWriteRepository _customerWriteRepository;
 
         public ProductsController(IProductWriteRepository productWriteRepository, IProductReadRepository productReadRepository, IOrderWriteRepository orderWriteRepository, ICustomerWriteRepository customerWriteRepository, IOrderReadRepository orderReadRepository)
@@ -27,11 +26,9 @@ namespace ECommerceAPI.API.Controllers
         }
 
         [HttpGet]  
-        public async Task Get()
+        public async Task<IActionResult> Get()
         {
-            Order order = await _orderReadRepository.GetByIdAsync("5433d6be-a28f-4d78-b3bb-1d3b4a01c6f3");
-            order.Address = "Istanbul";
-            await _orderWriteRepository.SaveAsync();
+            return Ok("Hello");
         }
     }
 }

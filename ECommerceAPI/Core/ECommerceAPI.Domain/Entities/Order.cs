@@ -7,9 +7,7 @@ namespace ECommerceAPI.Domain.Entities
         public Guid CustomerId { get; set; }
         public string Description { get; set; } //Customer can explain in description
         public string Address { get; set; }
-
         public ICollection<Product> Products { get; set; }
-
         public Customer Customer { get; set; }
     }
 }

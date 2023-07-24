@@ -12,6 +12,8 @@ namespace ECommerceAPI.API
             builder.Services.AddControllers();
             builder.Services.AddPersistanceServices();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
+            policy.WithOrigins("http://localhost:4200","https://localhost:4200").AllowAnyHeader().AllowAnyMethod())); 
 
             var app = builder.Build();
 
@@ -20,7 +22,7 @@ namespace ECommerceAPI.API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseCors();
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();

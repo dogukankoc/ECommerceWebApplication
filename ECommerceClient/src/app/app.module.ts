@@ -12,7 +12,9 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, AppRoutingModule, AdminModule, UiModule, BrowserAnimationsModule,ToastrModule.forRoot(),NgxSpinnerModule ],
-  providers: [],
+  providers: [
+    {provide:"baseUrl", useValue: "https://localhost:7221/api"}
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
